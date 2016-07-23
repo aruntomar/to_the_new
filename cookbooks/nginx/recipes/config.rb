@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
-cookbook_file '/var/www/html/index.html' do
+cookbook_file "#{node['nginx']['document_root']}/index.html" do
   source 'to_the_new.html'
   owner 'root'
   group 'root'
@@ -12,16 +12,15 @@ cookbook_file '/var/www/html/index.html' do
   action :create
 end
 
-cookbook_file '/etc/nginx/sites-enabled/jetty.conf' do
-  source 'jetty.conf'
+template "#{node['nginx']['sites-enabled']}/jetty.conf" do
+  source 'jetty.conf.erb'
   owner 'root'
   group 'root'
   mode 00644
   notifies :reload, 'service[nginx]', :delayed
 end
 
-link '/etc/nginx/sites-enabled/default' do
-  # to '/etc/passwd'
+link "#{node['nginx']['sites-enabled']}/default" do
   action :delete
   notifies :reload, 'service[nginx]', :delayed
 end
