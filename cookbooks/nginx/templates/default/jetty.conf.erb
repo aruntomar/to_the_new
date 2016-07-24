@@ -1,0 +1,8 @@
+server{
+  listen <%= node['nginx']['port'] %> ;
+
+  server_name localhost;
+    location / {
+      proxy_pass http://<%= node['nginx']['proxy_ip'] %>:<%= node['nginx']['proxy_port'] %>;
+      }
+}
