@@ -11,6 +11,8 @@ Chef::Log.warn('running build-essential first')
 # end
 #
 include_recipe 'build-essential'
+node.set['java']['jdk_version'] = '7'
+include_recipe 'java'
 
 execute 'update_apt' do
   command 'apt-get update; touch /tmp/apt_updated'
@@ -18,8 +20,8 @@ execute 'update_apt' do
   not_if { File.exist?('/tmp/apt_updated')}
 end
 
-%w( nginx wget vim tmux curl ).each do |pkg|
-  package pkg do
-    action :install
-  end
-end
+# %w( nginx wget vim tmux curl ).each do |pkg|
+#   package pkg do
+#     action :install
+#   end
+# end
