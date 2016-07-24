@@ -24,3 +24,9 @@ link "#{node['nginx']['sites-enabled']}/default" do
   action :delete
   notifies :reload, 'service[nginx]', :delayed
 end
+
+
+nginx_site 'tothenew' do
+  server_name 'tothenet.net'
+  document_root '/home/to_the_new/public_html'
+end
